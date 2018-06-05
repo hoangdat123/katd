@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: DemoWebService Maven Webapp
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: katd
+Build-Jdk: 1.8.0_172
+Implementation-URL: http://projects.spring.io/spring-boot/DemoWebServi
+ ce/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
