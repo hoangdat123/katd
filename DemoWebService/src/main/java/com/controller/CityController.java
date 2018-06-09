@@ -3,6 +3,7 @@ package com.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import com.service.CityService;
 
 @RestController
 @RequestMapping("city")
-public class CityController { 	
+public class CityController  { 	
 	@Autowired
 	private CityRepository cityService;
 //	lấy tất cả
@@ -28,13 +29,14 @@ public class CityController {
 	}
 	//lấy theo id
 	@RequestMapping("/{id}")
-	public City getByID(@PathVariable("id") int id) {
+	public ResponseEntity<Object> getByID(@PathVariable("id") int id) {
 		System.out.println("Fetching Id " + id);
 		City c = cityService.findOne(id);
 		if (c == null) {
 			System.out.println("Id " + id + " not found");
+			return new ResponseEntity<Object>("Lỗi",HttpStatus.CONFLICT);
 		}
-		return c;
+		return new ResponseEntity<Object>(c,HttpStatus.OK);
 	}
 	@PostMapping("/add")
 	public City add(@RequestBody City c) {
@@ -62,7 +64,7 @@ public class CityController {
 			cityService.save(c);		
 			return c;
 		}
-		System.out.println("Not exsit id! ");		
+		System.out.println("Not exist id! ");		
 		return tam;
 	}
 
