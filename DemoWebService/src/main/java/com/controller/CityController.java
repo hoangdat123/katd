@@ -34,38 +34,38 @@ public class CityController  {
 		City c = cityService.findOne(id);
 		if (c == null) {
 			System.out.println("Id " + id + " not found");
-			return new ResponseEntity<Object>("Lỗi",HttpStatus.CONFLICT);
+			return new ResponseEntity<Object>("Id not found!",HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(c,HttpStatus.OK);
 	}
 	@PostMapping("/add")
-	public City add(@RequestBody City c) {
+	public ResponseEntity<Object> add(@RequestBody City c) {
 		//ID tự tăng ..
 		System.out.println("Added:: " + c);
 		cityService.save(c);		
-		return c;
+		return new ResponseEntity<Object>("Added Successly:\n"+c,HttpStatus.OK);
 	}
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<City> deleteByID(@PathVariable("id") int id) {
-		City tam=cityService.findOne(id);
-		if(tam==null){
-	        return ResponseEntity.notFound().build();
+	public ResponseEntity<Object> deleteByID(@PathVariable("id") int id) {
+		City city=cityService.findOne(id);
+		if(city==null || city.equals("")){
+	        return new ResponseEntity<Object>("Not Found User with ID:" +id,HttpStatus.NOT_FOUND);
 
 		}
 		cityService.delete(id);
 //		System.out.println("delete id:: " + id);
-		return ResponseEntity.ok().build();
+		return new ResponseEntity<Object>("Deleted Successly!\n",HttpStatus.OK);
 	}
 	@PutMapping("/update")
-	public City update(@RequestBody City c) {
-		City tam=cityService.findOne(c.getId());
+	public ResponseEntity<Object> update(@RequestBody City city) {
+		City tam=cityService.findOne(city.getId());
 		if(tam!=null){ //đã tồn tại thì update lại
-			System.out.println("update id:: " + c.getId());
-			cityService.save(c);		
-			return c;
+			System.out.println("update id:: " + city.getId());
+			cityService.save(city);		
+			return new ResponseEntity<Object>("Updated: \n"+city,HttpStatus.OK);
 		}
 		System.out.println("Not exist id! ");		
-		return tam;
+		return new ResponseEntity<Object>("Not exist ID!",HttpStatus.NOT_FOUND);
 	}
 
 	
